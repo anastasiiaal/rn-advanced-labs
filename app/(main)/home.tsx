@@ -8,17 +8,17 @@ export default function HomeScreen() {
     <ThemedView style={styles.container}>
       <Link asChild href={{ pathname: '/(main)/detail/[id]', params: { id: '1' } }}>
         <Pressable style={styles.button}>
-          <ThemedText type="defaultSemiBold">Detail 1</ThemedText>
+          <ThemedText type="defaultSemiBold" style={styles.linkText}>Detail 1</ThemedText>
         </Pressable>
       </Link>
       <Link asChild href={{ pathname: '/(main)/detail/[id]', params: { id: '2' } }}>
         <Pressable style={styles.button}>
-          <ThemedText type="defaultSemiBold">Detail 2</ThemedText>
+          <ThemedText type="defaultSemiBold" style={styles.linkText}>Detail 2</ThemedText>
         </Pressable>
       </Link>
       <Link asChild href={{ pathname: '/(main)/detail/[id]', params: { id: '3' } }}>
         <Pressable style={styles.button}>
-          <ThemedText type="defaultSemiBold">Detail 3</ThemedText>
+          <ThemedText type="defaultSemiBold" style={styles.linkText}>Detail 3</ThemedText>
         </Pressable>
       </Link>
     </ThemedView>
@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
     gap: 12,
     padding: 16,
     justifyContent: 'center',
+    backgroundColor: '#ffffff',
   },
   button: {
     borderRadius: 8,
@@ -38,5 +39,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     alignItems: 'center',
     backgroundColor: 'rgba(0,0,0,0.08)',
+  },
+  linkText: {
+    color: '#111111',
   },
 });

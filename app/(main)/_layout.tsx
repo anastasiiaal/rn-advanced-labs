@@ -13,7 +13,7 @@ export default function MainLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
+        headerShown: true,
         tabBarButton: HapticTab,
       }}>
       <Tabs.Screen
@@ -40,7 +40,7 @@ export default function MainLayout() {
       <Tabs.Screen
         name="detail/[id]"
         options={{
-          title: "Detail dynamic hidden",
+          title: "Detail",
           href: null, // Hide from the tab bar but keep it routable
         }}
       />

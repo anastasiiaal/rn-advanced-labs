@@ -30,6 +30,14 @@ export default function MainLayout() {
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="person.fill" color={color} />,
         }}
       />
+      <Tabs.Screen
+        name="detail/[id]"
+        options={{
+          title: "Detail page",
+          // tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          href: null, // Hide from the tab bar but keep it routable
+        }}
+      />
     </Tabs>
   );
 }

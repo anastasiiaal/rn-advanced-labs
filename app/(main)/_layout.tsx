@@ -31,10 +31,16 @@ export default function MainLayout() {
         }}
       />
       <Tabs.Screen
-        name="detail/[id]"
+        name="detail/index"
         options={{
           title: "Detail page",
-          // tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="detail/[id]"
+        options={{
+          title: "Detail dynamic hidden",
           href: null, // Hide from the tab bar but keep it routable
         }}
       />

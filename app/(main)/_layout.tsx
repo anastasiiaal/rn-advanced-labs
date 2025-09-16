@@ -31,13 +31,6 @@ export default function MainLayout() {
         }}
       />
       <Tabs.Screen
-        name="detail/index"
-        options={{
-          title: "Detail page",
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
-        }}
-      />
-      <Tabs.Screen
         name="detail/[id]"
         options={{
           title: "Detail",

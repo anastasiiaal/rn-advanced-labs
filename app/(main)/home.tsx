@@ -6,17 +6,17 @@ import { Pressable, StyleSheet } from 'react-native';
 export default function HomeScreen() {
   return (
     <ThemedView style={styles.container}>
-      <Link asChild href={{ pathname: '/(main)/detail/[id]', params: { id: '1' } }}>
+      <Link asChild href="/detail/1">
         <Pressable style={styles.button}>
           <ThemedText type="defaultSemiBold" style={styles.linkText}>Detail 1</ThemedText>
         </Pressable>
       </Link>
-      <Link asChild href={{ pathname: '/(main)/detail/[id]', params: { id: '2' } }}>
+      <Link asChild href="/detail/2">
         <Pressable style={styles.button}>
           <ThemedText type="defaultSemiBold" style={styles.linkText}>Detail 2</ThemedText>
         </Pressable>
       </Link>
-      <Link asChild href={{ pathname: '/(main)/detail/[id]', params: { id: '3' } }}>
+      <Link asChild href="/detail/3">
         <Pressable style={styles.button}>
           <ThemedText type="defaultSemiBold" style={styles.linkText}>Detail 3</ThemedText>
         </Pressable>

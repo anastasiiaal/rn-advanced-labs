@@ -19,18 +19,15 @@ export const useRobotsStore = create<RobotsState>()(
             robots: [],
 
             createRobot: (data) => {
-                // Vérif unicité du name
-                const exists = get().robots.some(r => r.name === data.name);
-                if (exists) {
-                    throw new Error("Un robot avec ce nom existe déjà");
-                }
-
-                // Validation avec Yup
                 const newRobot: Robot = {
                     id: uuidv4(),
-                    ...data,
+                    name: data.name,
+                    label: data.label,
+                    year: data.year,
+                    type: data.type,
                 };
                 robotSchema.validateSync(newRobot);
+                console.log("➡️ Robot créé :", newRobot);
 
                 set((state) => ({
                     robots: [...state.robots, newRobot],

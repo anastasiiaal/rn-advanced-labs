@@ -1,5 +1,5 @@
-import React from "react";
-import { FlatList, Text, TouchableOpacity, View, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { FlatList, Text, TouchableOpacity, View, StyleSheet, Modal } from "react-native";
 import { useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
@@ -8,7 +8,16 @@ import { useRobotsStore } from "@/store/tp4-robots/robotsStore";
 
 export default function RobotsIndexScreen() {
     const robots = useRobotsStore((s) => s.robots);
+    const deleteRobot = useRobotsStore((s) => s.deleteRobot);
     const router = useRouter();
+
+    const [showModal, setShowModal] = useState(false);
+
+    const handleDelete = (id: string) => {
+        deleteRobot(id);
+        setShowModal(true);
+        setTimeout(() => setShowModal(false), 1500); // auto-fermeture après 1.5s
+    };
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -19,7 +28,6 @@ export default function RobotsIndexScreen() {
                 ListEmptyComponent={<Text>Aucun robot pour le moment.</Text>}
                 renderItem={({ item }) => (
                     <View style={styles.robotCard}>
-                        {/* Infos robot (non cliquables) */}
                         <View style={{ flex: 1 }}>
                             <Text style={styles.robotName}>{item.name}</Text>
                             <Text style={styles.robotLabel}>{item.label}</Text>
@@ -30,7 +38,7 @@ export default function RobotsIndexScreen() {
 
                         {/* Bouton modifier */}
                         <TouchableOpacity
-                            style={styles.editButton}
+                            style={styles.iconButton}
                             onPress={() =>
                                 router.push({
                                     pathname: "/(main)/tp4-robots/edit/[id]",
@@ -40,6 +48,14 @@ export default function RobotsIndexScreen() {
                         >
                             <Ionicons name="create-outline" size={20} color="#007AFF" />
                         </TouchableOpacity>
+
+                        {/* Bouton supprimer */}
+                        <TouchableOpacity
+                            style={styles.iconButton}
+                            onPress={() => handleDelete(item.id)}
+                        >
+                            <Ionicons name="trash-outline" size={20} color="red" />
+                        </TouchableOpacity>
                     </View>
                 )}
             />
@@ -48,6 +64,16 @@ export default function RobotsIndexScreen() {
             <TouchableOpacity style={styles.fab} onPress={() => router.push("/(main)/tp4-robots/create")}>
                 <Text style={styles.fabText}>+</Text>
             </TouchableOpacity>
+
+            {/* Modal confirmation */}
+            <Modal visible={showModal} transparent animationType="fade">
+                <View style={styles.modalContainer}>
+                    <View style={styles.modalContent}>
+                        <Ionicons name="checkmark-circle" size={40} color="green" />
+                        <Text style={{ marginTop: 8 }}>Robot supprimé avec succès</Text>
+                    </View>
+                </View>
+            </Modal>
         </SafeAreaView>
     );
 }
@@ -74,9 +100,9 @@ const styles = StyleSheet.create({
         color: "#888",
         marginTop: 4,
     },
-    editButton: {
+    iconButton: {
         padding: 8,
-        marginLeft: 12,
+        marginLeft: 8,
     },
     fab: {
         position: "absolute",
@@ -98,5 +124,17 @@ const styles = StyleSheet.create({
         fontSize: 28,
         color: "white",
         marginTop: -2,
+    },
+    modalContainer: {
+        flex: 1,
+        backgroundColor: "rgba(0,0,0,0.4)",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    modalContent: {
+        backgroundColor: "white",
+        padding: 20,
+        borderRadius: 12,
+        alignItems: "center",
     },
 });

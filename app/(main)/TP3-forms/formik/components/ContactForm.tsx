@@ -1,6 +1,6 @@
-import { Formik } from "formik";
 import React from "react";
-import { Button, StyleSheet, Switch, Text, TextInput, View } from "react-native";
+import { View, TextInput, Button, Text, Switch, StyleSheet, Alert } from "react-native";
+import { Formik } from "formik";
 import { contactSchema } from "../validation/schema";
 
 export default function ContactForm() {
@@ -14,8 +14,12 @@ export default function ContactForm() {
                 termsAccepted: false,
             }}
             validationSchema={contactSchema}
-            onSubmit={(values) => {
-                console.log("Form Submitted:", values);
+            onSubmit={(values, { resetForm }) => {
+                // Afficher le popup
+                Alert.alert("Merci", "Votre message a été envoyé 🌻");
+
+                // Nettoyer le formulaire
+                resetForm();
             }}
         >
             {({ handleChange, handleSubmit, values, errors, touched, setFieldValue }) => (

@@ -37,6 +37,42 @@ export default function MainLayout() {
           href: null, // Hide from the tab bar but keep it routable
         }}
       />
+      <Tabs.Screen
+        name="TP3-forms"
+        options={{
+          title: "TP3-forms",
+          href: null, // Hide from the tab bar but keep it routable
+        }}
+      />
+      <Tabs.Screen
+        name="TP3-forms/formik/index"
+        options={{
+          title: "Formik",
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="envelope.fill" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="TP3-forms/formik/validation/schema"
+        options={{
+          title: "Validation",
+          href: null, // Hide from the tab bar but keep it routable
+        }}
+      />
+      <Tabs.Screen
+        name="TP3-forms/rhf/index"
+        options={{
+          title: "RHF",
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="envelope.fill" color={color} />,
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="TP3-forms/rhf/validation/schema"
+        options={{
+          title: "Validation",
+          href: null, // Hide from the tab bar but keep it routable
+        }}
+      />
     </Tabs>
   );
 }

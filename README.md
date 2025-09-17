@@ -3,7 +3,6 @@
 <img src="./assets/images/readme/1.jpg" width="25%" />
 
 ---
----
 
 ## TP 2 - Navigation, Persistance & Deep Linking avec Expo Router
 
@@ -20,7 +19,6 @@
 | Detail | `/detail/[id]` | `id` (string) |
 
 
----
 ---
 
 ## TP3 — Formulaires avancés : Formik+Yup ET RHF+Zod
@@ -54,7 +52,6 @@
   <img src="./assets/images/readme/3.2.jpg" width="25%" />
 </p>
 
----
 ---
 
 ## TP 4 (a) - Robots

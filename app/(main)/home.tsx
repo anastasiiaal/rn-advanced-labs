@@ -21,6 +21,16 @@ export default function HomeScreen() {
           <ThemedText type="defaultSemiBold" style={styles.linkText}>Detail 3</ThemedText>
         </Pressable>
       </Link>
+      <Link asChild href="/TP3-forms/rhf">
+        <Pressable style={styles.button}>
+          <ThemedText type="defaultSemiBold" style={styles.linkText}>Formulaire RHF</ThemedText>
+        </Pressable>
+      </Link>
+      <Link asChild href="/TP3-forms/formik">
+        <Pressable style={styles.button}>
+          <ThemedText type="defaultSemiBold" style={styles.linkText}>Formulaire Formik</ThemedText>
+        </Pressable>
+      </Link>
     </ThemedView>
   );
 }

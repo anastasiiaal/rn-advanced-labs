@@ -38,7 +38,7 @@ export default function MainLayout() {
         }}
       />
       <Tabs.Screen
-        name="TP3-forms"
+        name="TP3-forms/index"
         options={{
           title: "TP3-forms",
           href: null, // Hide from the tab bar but keep it routable
@@ -70,11 +70,18 @@ export default function MainLayout() {
         options={{
           title: "RHF",
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="envelope.fill" color={color} />,
-          href: null,
+          // href: null,
         }}
       />
       <Tabs.Screen
         name="TP3-forms/rhf/validation/schema"
+        options={{
+          title: "Validation",
+          href: null, // Hide from the tab bar but keep it routable
+        }}
+      />
+      <Tabs.Screen
+        name="TP3-forms/rhf/components/ContactForm"
         options={{
           title: "Validation",
           href: null, // Hide from the tab bar but keep it routable

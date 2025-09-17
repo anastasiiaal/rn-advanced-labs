@@ -38,35 +38,14 @@ export default function MainLayout() {
         }}
       />
       <Tabs.Screen
-        name="TP3-forms/index"
-        options={{
-          title: "TP3-forms",
-          href: null, // Hide from the tab bar but keep it routable
-        }}
-      />
-      <Tabs.Screen
-        name="TP3-forms/formik/index"
+        name="TP3-forms/formik"
         options={{
           title: "Formik",
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="envelope.fill" color={color} />,
         }}
       />
       <Tabs.Screen
-        name="TP3-forms/formik/validation/schema"
-        options={{
-          title: "Validation",
-          href: null, // Hide from the tab bar but keep it routable
-        }}
-      />
-      <Tabs.Screen
-        name="TP3-forms/formik/components/ContactForm"
-        options={{
-          title: "Validation",
-          href: null, // Hide from the tab bar but keep it routable
-        }}
-      />
-      <Tabs.Screen
-        name="TP3-forms/rhf/index"
+        name="TP3-forms/rhf"
         options={{
           title: "RHF",
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="envelope.fill" color={color} />,
@@ -74,16 +53,9 @@ export default function MainLayout() {
         }}
       />
       <Tabs.Screen
-        name="TP3-forms/rhf/validation/schema"
+        name="TP3-forms/index"
         options={{
-          title: "Validation",
-          href: null, // Hide from the tab bar but keep it routable
-        }}
-      />
-      <Tabs.Screen
-        name="TP3-forms/rhf/components/ContactForm"
-        options={{
-          title: "Validation",
+          title: "TP3-forms",
           href: null, // Hide from the tab bar but keep it routable
         }}
       />

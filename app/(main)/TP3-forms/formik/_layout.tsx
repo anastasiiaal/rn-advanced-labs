@@ -3,8 +3,9 @@ import { Stack, useRouter } from "expo-router";
 import React from "react";
 import { TouchableOpacity } from "react-native";
 
-export default function TP3FormsLayout() {
+export default function FormikLayout() {
     const router = useRouter();
+
     const BackButton = () => (
         <TouchableOpacity
             onPress={() => router.push("/home")}
@@ -20,22 +21,6 @@ export default function TP3FormsLayout() {
         <Stack>
             <Stack.Screen
                 name="index"
-                options={{
-                    title: "Back",
-                    headerShown: true,
-                    headerLeft: () => <BackButton />,
-                }}
-            />
-            <Stack.Screen
-                name="formik/index"
-                options={{
-                    title: "Back",
-                    headerShown: true,
-                    headerLeft: () => <BackButton />,
-                }}
-            />
-            <Stack.Screen
-                name="rhf/index"
                 options={{
                     title: "Back",
                     headerShown: true,

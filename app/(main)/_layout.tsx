@@ -81,6 +81,28 @@ export default function MainLayout() {
           href: null, // Hide from the tab bar but keep it routable
         }}
       />
+      {/* Robots Redux Toolkit */}
+      <Tabs.Screen
+        name="tp4-robots-rtk/index"
+        options={{
+          title: "Robots",
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="cloud-sync.fill" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="tp4-robots-rtk/create"
+        options={{
+          title: "Robots create",
+          href: null, // Hide from the tab bar but keep it routable
+        }}
+      />
+      <Tabs.Screen
+        name="tp4-robots-rtk/edit/[id]"
+        options={{
+          title: "Robot one",
+          href: null, // Hide from the tab bar but keep it routable
+        }}
+      />
     </Tabs>
   );
 }

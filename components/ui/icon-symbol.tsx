@@ -22,6 +22,7 @@ const MAPPING = {
   'envelope.fill': 'mail',
   'plus': 'add',
   'robotic.vacuum.fill': 'cleaning-services',
+  'cloud-sync.fill': 'cloud-sync',
 } as IconMapping;
 
 /**

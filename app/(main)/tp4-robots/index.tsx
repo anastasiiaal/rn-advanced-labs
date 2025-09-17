@@ -11,6 +11,14 @@ export default function RobotsIndexScreen() {
     const deleteRobot = useRobotsStore((s) => s.deleteRobot);
     const router = useRouter();
 
+    const typeLabels: Record<string, string> = {
+        industrial: "Industriel",
+        service: "Service",
+        medical: "Médical",
+        educational: "Éducatif",
+        other: "Autre",
+    };
+
     const [showModal, setShowModal] = useState(false);
 
     const handleDelete = (id: string) => {
@@ -32,7 +40,7 @@ export default function RobotsIndexScreen() {
                             <Text style={styles.robotName}>{item.name}</Text>
                             <Text style={styles.robotLabel}>{item.label}</Text>
                             <Text style={styles.robotYearType}>
-                                {item.year} • {item.type}
+                                {item.year} • {typeLabels[item.type]}
                             </Text>
                         </View>
 

@@ -66,6 +66,16 @@ Formik + Yup offrent une syntaxe très lisible, facile à maintenir dans un cont
 
 <img src="./assets/images/readme/image3.png" width="30%" />
 
+## Routes Robots
+
+| Nom        | URL                       | Paramètres          |
+|------------|---------------------------|---------------------|
+| Liste      | `/tp4-robots`             | -                   |
+| Création   | `/tp4-robots/create`      | -                   |
+| Édition    | `/tp4-robots/edit/[id]`   | `id` (string, uuid) |
+| Suppression| `/tp4-robots` *(depuis la liste)* | `id` (string, uuid) |
+
+
 ### Règles de validation
 
 Les règles métiers sont centralisées dans `robotSchema.ts` avec **Yup** :

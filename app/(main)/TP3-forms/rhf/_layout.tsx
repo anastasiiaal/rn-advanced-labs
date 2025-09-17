@@ -17,6 +17,17 @@ export default function FormikLayout() {
         </TouchableOpacity>
     );
 
+    const GoToFormikButton = () => (
+        <TouchableOpacity
+            onPress={() => router.push("/TP3-forms/formik")}
+            style={{ paddingHorizontal: 12 }}
+            accessibilityRole="button"
+            accessibilityLabel="Go to Formik form"
+        >
+            <Ionicons name="swap-horizontal" size={24} />
+        </TouchableOpacity>
+    );
+
     return (
         <Stack>
             <Stack.Screen
@@ -25,6 +36,7 @@ export default function FormikLayout() {
                     title: "Back",
                     headerShown: true,
                     headerLeft: () => <BackButton />,
+                    headerRight: () => <GoToFormikButton />,
                 }}
             />
         </Stack>

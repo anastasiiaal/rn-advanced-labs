@@ -2,6 +2,7 @@ import React from "react";
 import { FlatList, Text, TouchableOpacity, View, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Ionicons } from "@expo/vector-icons";
 
 import { useRobotsStore } from "@/store/tp4-robots/robotsStore";
 
@@ -11,34 +12,40 @@ export default function RobotsIndexScreen() {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            {/* Liste des robots */}
             <FlatList
                 data={robots}
                 keyExtractor={(item) => item.id}
                 contentContainerStyle={{ padding: 16 }}
                 ListEmptyComponent={<Text>Aucun robot pour le moment.</Text>}
                 renderItem={({ item }) => (
-                    <TouchableOpacity
-                        style={styles.robotCard}
-                        onPress={() =>
-                            router.push({
-                                pathname: "/(main)/tp4-robots/[id]",
-                                params: { id: item.id },
-                            })
-                        }
+                    <View style={styles.robotCard}>
+                        {/* Infos robot (non cliquables) */}
+                        <View style={{ flex: 1 }}>
+                            <Text style={styles.robotName}>{item.name}</Text>
+                            <Text style={styles.robotLabel}>{item.label}</Text>
+                            <Text style={styles.robotYearType}>
+                                {item.year} • {item.type}
+                            </Text>
+                        </View>
 
-                    >
-                        <Text style={styles.robotName}>{item.name}</Text>
-                        <Text style={styles.robotLabel}>{item.label}</Text>
-                        <Text style={styles.robotYearType}>
-                            {item.year} • {item.type}
-                        </Text>
-                    </TouchableOpacity>
+                        {/* Bouton modifier */}
+                        <TouchableOpacity
+                            style={styles.editButton}
+                            onPress={() =>
+                                router.push({
+                                    pathname: "/(main)/tp4-robots/edit/[id]",
+                                    params: { id: item.id },
+                                })
+                            }
+                        >
+                            <Ionicons name="create-outline" size={20} color="#007AFF" />
+                        </TouchableOpacity>
+                    </View>
                 )}
             />
 
             {/* Bouton flottant + */}
-            <TouchableOpacity style={styles.fab} onPress={() => router.push("/tp4-robots/create")}>
+            <TouchableOpacity style={styles.fab} onPress={() => router.push("/(main)/tp4-robots/create")}>
                 <Text style={styles.fabText}>+</Text>
             </TouchableOpacity>
         </SafeAreaView>
@@ -47,6 +54,8 @@ export default function RobotsIndexScreen() {
 
 const styles = StyleSheet.create({
     robotCard: {
+        flexDirection: "row",
+        alignItems: "center",
         backgroundColor: "#f2f2f2",
         padding: 16,
         borderRadius: 12,
@@ -65,6 +74,10 @@ const styles = StyleSheet.create({
         color: "#888",
         marginTop: 4,
     },
+    editButton: {
+        padding: 8,
+        marginLeft: 12,
+    },
     fab: {
         position: "absolute",
         bottom: 24,
@@ -75,8 +88,8 @@ const styles = StyleSheet.create({
         borderRadius: 28,
         alignItems: "center",
         justifyContent: "center",
-        elevation: 5, // ombre Android
-        shadowColor: "#000", // ombre iOS
+        elevation: 5,
+        shadowColor: "#000",
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.3,
         shadowRadius: 3,

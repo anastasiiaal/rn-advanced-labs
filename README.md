@@ -1,9 +1,14 @@
-# Welcome to your Expo app 👋
+## TP 1
+
+<img src="./assets/images/readme/1.jpg" width="45%" />
+
+---
+---
 
 ## TP 2 - Navigation, Persistance & Deep Linking avec Expo Router
 
 ### Le schéma d'arborescence :  
-![App preview](./assets/images/readme/image.png)
+<img src="./assets/images/readme/image.png" width="60%" />
 
 
 ### Routes (Nom, URL, paramètres)
@@ -32,7 +37,7 @@
 
 
 ### Le schéma d'arborescence :  
-![App preview](./assets/images/readme/image2.png)
+<img src="./assets/images/readme/image2.png" width="60%" />
 
 ### Routes (Nom, URL, paramètres)
 
@@ -43,3 +48,8 @@
 | Detail       | `/detail/[id]`      | `id` (string) |
 | Formik Form  | `/TP3-forms/formik` | -             |
 | RHF Form     | `/TP3-forms/rhf`    | -             |
+
+<p float="left">
+  <img src="./assets/images/readme/3.1.jpg" width="45%" />
+  <img src="./assets/images/readme/3.2.jpg" width="45%" />
+</p>

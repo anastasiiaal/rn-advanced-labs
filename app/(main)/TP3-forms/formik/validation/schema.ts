@@ -16,3 +16,7 @@ export const contactSchema = Yup.object({
     termsAccepted: Yup.boolean()
         .oneOf([true], "Vous devez accepter les conditions"),
 });
+
+export default function IgnoreMe() {
+    return null;
+}

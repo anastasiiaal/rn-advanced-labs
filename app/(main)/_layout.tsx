@@ -13,7 +13,7 @@ export default function MainLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
+        headerShown: true,
         tabBarButton: HapticTab,
       }}>
       <Tabs.Screen
@@ -53,6 +53,13 @@ export default function MainLayout() {
       />
       <Tabs.Screen
         name="TP3-forms/formik/validation/schema"
+        options={{
+          title: "Validation",
+          href: null, // Hide from the tab bar but keep it routable
+        }}
+      />
+      <Tabs.Screen
+        name="TP3-forms/formik/components/ContactForm"
         options={{
           title: "Validation",
           href: null, // Hide from the tab bar but keep it routable

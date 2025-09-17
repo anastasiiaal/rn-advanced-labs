@@ -37,6 +37,28 @@ export default function MainLayout() {
           href: null, // Hide from the tab bar but keep it routable
         }}
       />
+      <Tabs.Screen
+        name="TP3-forms/formik"
+        options={{
+          title: "Formik",
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="envelope.fill" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="TP3-forms/rhf"
+        options={{
+          title: "RHF",
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="envelope.fill" color={color} />,
+          // href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="TP3-forms/index"
+        options={{
+          title: "TP3-forms",
+          href: null, // Hide from the tab bar but keep it routable
+        }}
+      />
     </Tabs>
   );
 }

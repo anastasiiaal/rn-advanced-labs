@@ -19,7 +19,7 @@ export default function DetailLayout() {
                             accessibilityRole="button"
                             accessibilityLabel="Back"
                         >
-                            <Ionicons name="arrow-back" size={24} color="#ffffff" />
+                            <Ionicons name="arrow-back" size={24} />
                         </TouchableOpacity>
                     ),
                 }}

@@ -20,6 +20,8 @@ const MAPPING = {
   'chevron.right': 'chevron-right',
   'person.fill': 'person',
   'envelope.fill': 'mail',
+  'plus': 'add',
+  'robotic.vacuum.fill': 'cleaning-services',
 } as IconMapping;
 
 /**

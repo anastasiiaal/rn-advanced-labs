@@ -2,6 +2,7 @@ import React from "react";
 import { View, TextInput, Button, Text, Switch, StyleSheet, Alert } from "react-native";
 import { Formik } from "formik";
 import { contactSchema } from "../validation/schema";
+import * as Haptics from "expo-haptics";
 
 export default function ContactForm() {
     return (
@@ -14,15 +15,15 @@ export default function ContactForm() {
                 termsAccepted: false,
             }}
             validationSchema={contactSchema}
+            validateOnMount={true}
             onSubmit={(values, { resetForm }) => {
-                // Afficher le popup
-                Alert.alert("Merci", "Votre message a été envoyé 🌻");
-
-                // Nettoyer le formulaire
+                Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success); // succès
+                Alert.alert("Succès", "Votre message a été envoyé ✅");
                 resetForm();
             }}
+
         >
-            {({ handleChange, handleSubmit, values, errors, touched, setFieldValue }) => (
+            {({ handleChange, handleSubmit, values, errors, touched, setFieldValue, isValid }) => (
                 <View style={styles.container}>
                     {/* Display Name */}
                     <TextInput
@@ -83,7 +84,16 @@ export default function ContactForm() {
                         <Text style={styles.error}>{errors.termsAccepted}</Text>
                     )}
 
-                    <Button title="Envoyer" onPress={handleSubmit as any} />
+                    <Button
+                        title="Envoyer"
+                        onPress={() => {
+                            if (!isValid) {
+                                Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+                            }
+                            handleSubmit();
+                        }}
+                    />
+
                 </View>
             )}
         </Formik>

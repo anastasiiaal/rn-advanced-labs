@@ -11,6 +11,7 @@ import {
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { contactSchema, ContactFormData } from "../validation/schema";
+import * as Haptics from "expo-haptics";
 
 export default function ContactForm() {
     const {
@@ -30,10 +31,11 @@ export default function ContactForm() {
     });
 
     const onSubmit = (data: ContactFormData) => {
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success); // succès
         Alert.alert("Succès", "Votre message a été envoyé ✅");
-        console.log("Form submitted:", data);
-        reset(); // cleanup form
+        reset();
     };
+
 
     return (
         <View style={styles.container}>
@@ -122,7 +124,14 @@ export default function ContactForm() {
             )}
 
             {/* Submit */}
-            <Button title="Envoyer" onPress={handleSubmit(onSubmit)} />
+            <Button
+                title="Envoyer"
+                onPress={handleSubmit(
+                    onSubmit,
+                    () => Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error) // erreurs
+                )}
+            />
+
         </View>
     );
 }

@@ -59,6 +59,28 @@ export default function MainLayout() {
           href: null, // Hide from the tab bar but keep it routable
         }}
       />
+      {/* Robots */}
+      <Tabs.Screen
+        name="tp4-robots/index"
+        options={{
+          title: "Robots",
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="robotic.vacuum.fill" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="tp4-robots/create"
+        options={{
+          title: "Robots create",
+          href: null, // Hide from the tab bar but keep it routable
+        }}
+      />
+      <Tabs.Screen
+        name="tp4-robots/edit/[id]"
+        options={{
+          title: "Robot one",
+          href: null, // Hide from the tab bar but keep it routable
+        }}
+      />
     </Tabs>
   );
 }

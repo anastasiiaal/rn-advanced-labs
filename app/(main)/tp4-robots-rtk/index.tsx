@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { FlatList, Text, TouchableOpacity, View, StyleSheet, Modal } from "react-native";
+import {
+    FlatList,
+    Text,
+    TouchableOpacity,
+    View,
+    StyleSheet,
+    Modal,
+    Alert,
+} from "react-native";
 import { useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
@@ -19,10 +27,25 @@ const typeLabels: Record<string, string> = {
 export default function RobotsIndexScreenRtk() {
     const router = useRouter();
     const dispatch = useAppDispatch();
-
     const robots = useAppSelector(selectAllRobots);
 
     const [showModal, setShowModal] = useState(false);
+
+    const confirmDelete = (id: string, name: string) => {
+        Alert.alert(
+            "Supprimer ce robot ?",
+            `Êtes-vous sûr de vouloir supprimer "${name}" ?`,
+            [
+                { text: "Annuler", style: "cancel" },
+                {
+                    text: "Supprimer",
+                    style: "destructive",
+                    onPress: () => handleDelete(id),
+                },
+            ],
+            { cancelable: true }
+        );
+    };
 
     const handleDelete = (id: string) => {
         dispatch(deleteRobot(id));
@@ -42,6 +65,7 @@ export default function RobotsIndexScreenRtk() {
             >
                 Robots in Redux
             </Text>
+
             <FlatList
                 data={robots}
                 keyExtractor={(item) => item.id}
@@ -57,7 +81,6 @@ export default function RobotsIndexScreenRtk() {
                             </Text>
                         </View>
 
-                        {/* Bouton modifier (vers la version RTK) */}
                         <TouchableOpacity
                             style={styles.iconButton}
                             onPress={() =>
@@ -70,8 +93,10 @@ export default function RobotsIndexScreenRtk() {
                             <Ionicons name="create-outline" size={20} color="#007AFF" />
                         </TouchableOpacity>
 
-                        {/* Bouton supprimer */}
-                        <TouchableOpacity style={styles.iconButton} onPress={() => handleDelete(item.id)}>
+                        <TouchableOpacity
+                            style={styles.iconButton}
+                            onPress={() => confirmDelete(item.id, item.name)}
+                        >
                             <Ionicons name="trash-outline" size={20} color="red" />
                         </TouchableOpacity>
                     </View>
@@ -86,10 +111,10 @@ export default function RobotsIndexScreenRtk() {
                 <Text style={styles.fabText}>+</Text>
             </TouchableOpacity>
 
-            {/* Modal confirmation */}
+            {/* Modal de succès */}
             <Modal visible={showModal} transparent animationType="fade">
                 <View style={styles.modalContainer}>
-                    <View className="modalContent" style={styles.modalContent}>
+                    <View style={styles.modalContent}>
                         <Ionicons name="checkmark-circle" size={40} color="green" />
                         <Text style={{ marginTop: 8 }}>Robot supprimé avec succès</Text>
                     </View>
@@ -135,5 +160,10 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
     },
-    modalContent: { backgroundColor: "white", padding: 20, borderRadius: 12, alignItems: "center" },
+    modalContent: {
+        backgroundColor: "white",
+        padding: 20,
+        borderRadius: 12,
+        alignItems: "center",
+    },
 });

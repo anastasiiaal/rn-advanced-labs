@@ -224,3 +224,5 @@ validation/
 | **expo-sqlite**          | Fournit un moteur SQLite local et persistant sur le device.          | Stockage local des robots (CRUD, migrations, persistance offline).                        |
 | **expo-file-system** | Permet la lecture/écriture/copie de fichiers dans le stockage local. | Lecture des fichiers `.sql` pour les migrations + export/import des données (DB et JSON). |
 | **uuid**                            | Génère des identifiants uniques (UUID v4).                           | Attribution d’un `id` unique pour chaque robot créé localement.                           |
+| **@tanstack/react-query** | Cache réactif + synchronisation automatique | Gère le cache et la mise à jour automatique des données locales (SQLite). |
+

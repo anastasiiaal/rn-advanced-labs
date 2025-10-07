@@ -1,9 +1,8 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import robotsReducer from "@/features/robots/tp4-robots-rtk/robotsSlice";
+import robots from "@/features/robots/tp4-robots-rtk/robotsSlice";
 
-const rootReducer = combineReducers({
-    robots: robotsReducer,
+export const rootReducer = combineReducers({
+  robots, // => state.robots.robots
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
-export default rootReducer;

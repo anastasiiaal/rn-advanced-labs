@@ -1,122 +1,91 @@
-// Fallback “INDEX MODE” : pas de documentDirectory/cacheDirectory requis.
-// On garde la signature (savePhoto, listPhotos, getPhoto, deletePhoto) inchangée.
-
 import * as FileSystem from "expo-file-system/legacy";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Photo } from "./types";
 
-// Clé de l’index persistant
-const INDEX_KEY = "@photos_index_v1";
+/** Dossier racine : documentDirectory en priorité, sinon cacheDirectory. */
+const ROOT_DIR = (FileSystem.documentDirectory ?? FileSystem.cacheDirectory)!;
+const PHOTOS_DIR = ROOT_DIR.replace(/\/+$/, "") + "/photos";
 
-// Utilitaires index
-async function loadIndex(): Promise<Photo[]> {
-    try {
-        const raw = await AsyncStorage.getItem(INDEX_KEY);
-        if (!raw) return [];
-        const parsed = JSON.parse(raw) as Photo[];
-        // sécurité: filtre les entrées malformées
-        return parsed.filter((p) => p && typeof p.id === "string" && typeof p.uri === "string");
-    } catch {
-        return [];
+/** S'assure que le dossier /photos existe. */
+async function ensureDir() {
+    const info = await FileSystem.getInfoAsync(PHOTOS_DIR);
+    if (!info.exists) {
+        await FileSystem.makeDirectoryAsync(PHOTOS_DIR, { intermediates: true });
     }
 }
 
-async function saveIndex(list: Photo[]) {
-    await AsyncStorage.setItem(INDEX_KEY, JSON.stringify(list));
+function getExtFromUri(uri: string) {
+    const m = uri.match(/\.([a-zA-Z0-9]+)(?:\?|$)/);
+    return (m?.[1] || "jpg").toLowerCase();
 }
 
-// Normalise la date de création depuis FileSystem.getInfoAsync
-function normalizeCreatedAt(info: any): number {
+function join(...parts: string[]) {
+    const [head, ...rest] = parts;
+    return [head!.replace(/\/+$/, ""), ...rest.map((p) => p.replace(/^\/+/, ""))].join("/");
+}
+
+function toMs(modOrSec: number) {
+    // certaines plateformes renvoient des secondes
+    return modOrSec > 10_000_000_000 ? modOrSec : Math.round(modOrSec * 1000);
+}
+
+async function statCreatedAtAndSize(uri: string) {
+    const info = await FileSystem.getInfoAsync(uri);
+    // champs non typés dans certaines defs TS legacy :
     const mod =
-        info?.modificationTime ??
-        info?.lastModified ??
+        (info as any).modificationTime ??
+        (info as any).lastModified ??
         Date.now();
-    // certaines plateformes donnent des secondes → *1000
-    return mod > 10_000_000_000 ? mod : Math.round(mod * 1000);
+    const size = typeof (info as any).size === "number" ? (info as any).size : undefined;
+    return { createdAt: toMs(mod), size };
 }
 
-async function statOrNull(uri: string): Promise<{ createdAt: number; size?: number } | null> {
-    try {
+async function resolveById(id: string): Promise<string | null> {
+    const candidates = [`${id}.jpg`, `${id}.jpeg`, `${id}.png`].map((f) => join(PHOTOS_DIR, f));
+    for (const uri of candidates) {
         const info = await FileSystem.getInfoAsync(uri);
-        if (!info.exists) return null;
-        const createdAt = normalizeCreatedAt(info as any);
-        const size = typeof (info as any).size === "number" ? (info as any).size : undefined;
-        return { createdAt, size };
-    } catch {
-        return null;
+        if (info.exists) return uri;
     }
+    return null;
 }
 
-/**
- * Enregistre une photo dans l’index à partir de l’URI retournée par la caméra.
- * ⚠️ On ne déplace pas le fichier : on référence son URI (toujours locale).
- */
 export async function savePhoto(tempUri: string): Promise<Photo> {
+    await ensureDir();
     const id = String(Date.now());
-    const info = await statOrNull(tempUri);
-    const photo: Photo = {
-        id,
-        uri: tempUri,
-        createdAt: info?.createdAt ?? Date.now(),
-        size: info?.size,
-    };
+    const ext = getExtFromUri(tempUri);
+    const dest = join(PHOTOS_DIR, `${id}.${ext}`);
 
-    const list = await loadIndex();
-    await saveIndex([photo, ...list]);
-    return photo;
+    // on copie la photo dans notre sandbox durable
+    await FileSystem.copyAsync({ from: tempUri, to: dest });
+
+    const { createdAt, size } = await statCreatedAtAndSize(dest);
+    return { id, uri: dest, createdAt, size };
 }
 
-/**
- * Liste des photos depuis l’index (et nettoyage des URIs cassées).
- */
 export async function listPhotos(): Promise<Photo[]> {
-    const list = await loadIndex();
-    // Nettoie les entrées dont le fichier n’existe plus
-    const checked = await Promise.all(
-        list.map(async (p) => {
-            const st = await statOrNull(p.uri);
-            if (!st) return null;
-            return { ...p, createdAt: st.createdAt, size: st.size } as Photo;
-        })
+    await ensureDir();
+    const files = await FileSystem.readDirectoryAsync(PHOTOS_DIR);
+    const items = await Promise.all(
+        files
+            .filter((f) => /\.(jpg|jpeg|png)$/i.test(f))
+            .map(async (file) => {
+                const uri = join(PHOTOS_DIR, file);
+                const { createdAt, size } = await statCreatedAtAndSize(uri);
+                const id = file.replace(/\.(jpg|jpeg|png)$/i, "");
+                return { id, uri, createdAt, size } as Photo;
+            })
     );
-    const ok = checked.filter((x): x is Photo => !!x);
-    // Tri: plus récentes d’abord
-    ok.sort((a, b) => b.createdAt - a.createdAt);
-    // Si on a supprimé des entrées cassées, on persiste le ménage
-    if (ok.length !== list.length) await saveIndex(ok);
-    return ok;
+    return items.sort((a, b) => b.createdAt - a.createdAt);
 }
 
-/**
- * Récupère une photo par id depuis l’index (et vérifie l’existence du fichier).
- */
 export async function getPhoto(id: string): Promise<Photo | null> {
-    const list = await loadIndex();
-    const p = list.find((x) => x.id === id);
-    if (!p) return null;
-    const st = await statOrNull(p.uri);
-    if (!st) {
-        // fichier manquant → purge
-        await saveIndex(list.filter((x) => x.id !== id));
-        return null;
-    }
-    return { ...p, createdAt: st.createdAt, size: st.size };
+    const uri = await resolveById(id);
+    if (!uri) return null;
+    const { createdAt, size } = await statCreatedAtAndSize(uri);
+    return { id, uri, createdAt, size };
 }
 
-/**
- * Supprime le fichier cible si présent + enlève l’entrée de l’index.
- */
 export async function deletePhoto(id: string): Promise<void> {
-    const list = await loadIndex();
-    const p = list.find((x) => x.id === id);
-    const next = list.filter((x) => x.id !== id);
-    await saveIndex(next);
-
-    if (p) {
-        try {
-            await FileSystem.deleteAsync(p.uri, { idempotent: true });
-        } catch {
-            // ignore si déjà supprimé
-        }
-    }
+    const uri = await resolveById(id);
+    if (!uri) return;
+    await FileSystem.deleteAsync(uri, { idempotent: true });
 }

@@ -226,3 +226,12 @@ validation/
 | **uuid**                            | Génère des identifiants uniques (UUID v4).                           | Attribution d’un `id` unique pour chaque robot créé localement.                           |
 | **@tanstack/react-query** | Cache réactif + synchronisation automatique | Gère le cache et la mise à jour automatique des données locales (SQLite). |
 
+### Captures d'écran
+
+<p float="left">
+  <img src="./assets/images/readme/5.1.jpg" width="25%" />
+  <img src="./assets/images/readme/5.2.jpg" width="25%" />
+  <img src="./assets/images/readme/5.3.jpg" width="25%" />
+  <img src="./assets/images/readme/5.4.jpg" width="25%" />
+  <img src="./assets/images/readme/5.5.jpg" width="25%" />
+</p>

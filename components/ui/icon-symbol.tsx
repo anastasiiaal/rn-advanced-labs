@@ -25,6 +25,8 @@ const MAPPING = {
   'cloud-sync.fill': 'cloud-sync',
   'tray.fill': 'tray',
   'tray.full.fill': 'inbox',
+  'camera.fill': 'photo-camera',
+  'photo.fill.on.rectangle.fill': 'photo-library',
 } as IconMapping;
 
 /**

@@ -102,6 +102,14 @@ export default function MainLayout() {
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="tray.full.fill" color={color} />,
         }}
       />
+      {/* Robots with DB */}
+      <Tabs.Screen
+        name="tp6-camera"
+        options={{
+          title: "Camera",
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="camera.fill" color={color} />,
+        }}
+      />
     </Tabs>
   );
 }

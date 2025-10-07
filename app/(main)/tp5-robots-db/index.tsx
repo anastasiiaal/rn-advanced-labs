@@ -1,9 +1,9 @@
 import RobotListItem from "@/components/tp5-robots-db/RobotListItem";
-import { deleteRobot, listRobots, SortBy, SortDir } from "@/services/tp5-robots-db/robotsRepo";
+import { deleteRobot, listRobots, SortBy, Robot, SortDir } from "@/services/tp5-robots-db/robotsRepo";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
 import React, { useMemo, useState } from "react";
-import { FlatList, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Text, TouchableOpacity, View, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function RobotsDbIndex() {
@@ -23,6 +23,16 @@ export default function RobotsDbIndex() {
         mutationFn: (id: string) => deleteRobot(id),
         onSuccess: () => qc.invalidateQueries({ queryKey: ["robots"] }),
     });
+
+    const askDelete = (r: Robot) =>
+        Alert.alert("Supprimer ?", `Supprimer "${r.name}" ?`, [
+            { text: "Annuler", style: "cancel" },
+            {
+                text: "Supprimer",
+                style: "destructive",
+                onPress: () => del.mutate(r.id),
+            },
+        ]);
 
     // helpers UI
     const toggleSort = (key: SortBy) => {
@@ -79,7 +89,7 @@ export default function RobotsDbIndex() {
                     <RobotListItem
                         robot={item}
                         onEdit={() => router.push(`/tp5-robots-db/edit/${item.id}`)}
-                        onDelete={() => del.mutate(item.id)}
+                        onDelete={() => askDelete(item)}   // ← confirmation avant delete
                     />
                 )}
             />

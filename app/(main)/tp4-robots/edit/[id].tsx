@@ -21,6 +21,17 @@ export default function EditRobotScreen() {
 
     return (
         <SafeAreaView style={{ flex: 1, padding: 16 }}>
+            <Text
+                style={{
+                    fontSize: 22,
+                    fontWeight: "bold",
+                    marginBottom: 2,
+                    marginTop: 10,
+                    textAlign: "center",
+                }}
+            >
+                Edit robot {robot.name}
+            </Text>
             <RobotForm
                 initialValues={robot}
                 onSubmitSuccess={() => {

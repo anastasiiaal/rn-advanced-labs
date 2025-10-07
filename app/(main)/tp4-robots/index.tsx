@@ -29,6 +29,16 @@ export default function RobotsIndexScreen() {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
+            <Text
+                style={{
+                    fontSize: 22,
+                    fontWeight: "bold",
+                    marginTop: 15,
+                    textAlign: "center",
+                }}
+            >
+                Robots in Zustand
+            </Text>
             <FlatList
                 data={robots}
                 keyExtractor={(item) => item.id}

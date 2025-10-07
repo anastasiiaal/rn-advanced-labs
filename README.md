@@ -246,3 +246,13 @@ validation/
 | `expo-file-system`             | Lire/écrire des fichiers dans le sandbox de l’app (offline). | `FileSystem.documentDirectory`, `writeAsStringAsync`, `copyAsync`, `readDirectoryAsync`, `getInfoAsync` | Sauvegarder les photos capturées, lister le dossier, supprimer. | On stocke dans `documentDirectory` (pas la galerie système).     |
 | `expo-image`                   | Afficher des images performantes (miniatures & plein écran). | `<Image source={{ uri }} contentFit="cover" />`                                                         | Écran “Galerie” (grid), écran “Détail” (zoom / plein écran).    | Meilleure perf, placeholders, contentFit, etc.                   |
 | `expo-router` | Navigation par fichiers (stack, tabs).                       | `/app` routing, `useRouter()`, segments                                                                 | Pile d’écrans: Capture / Galerie / Détail.                      | On l’utilise pour une archi claire (tabs + stacks).              |
+
+
+### Captures d'écran
+
+<p float="left">
+  <img src="./assets/images/readme/6.1.jpg" width="24%" />
+  <img src="./assets/images/readme/6.2.jpg" width="24%" />
+  <img src="./assets/images/readme/6.3.jpg" width="24%" />
+  <img src="./assets/images/readme/6.4.jpg" width="24%" />
+</p>

@@ -19,7 +19,16 @@ const mapRow = (r: any): Robot => ({
     archived: !!r.archived,
 });
 
-export async function listRobots(opts?: { includeArchived?: boolean; q?: string }) {
+
+export type SortBy = "name" | "year" | "updated_at";
+export type SortDir = "asc" | "desc";
+
+export async function listRobots(opts?: {
+    includeArchived?: boolean;
+    q?: string;
+    sortBy?: SortBy;
+    sortDir?: SortDir;
+}) {
     const db = await openDb();
     const where: string[] = [];
     const params: any[] = [];
@@ -29,11 +38,22 @@ export async function listRobots(opts?: { includeArchived?: boolean; q?: string 
         where.push("(name LIKE ? OR label LIKE ?)");
         params.push(`%${opts.q}%`, `%${opts.q}%`);
     }
+
+    // Sécurise le ORDER BY
+    const sortByMap: Record<SortBy, string> = {
+        name: "name COLLATE NOCASE",
+        year: "year",
+        updated_at: "updated_at",
+    };
+    const sortBy = opts?.sortBy ?? "updated_at";
+    const sortDir = (opts?.sortDir ?? "desc").toUpperCase() === "ASC" ? "ASC" : "DESC";
+    const orderBy = `${sortByMap[sortBy]} ${sortDir}, id ASC`; // tri stable
+
     const sql = `
         SELECT id, name, label, year, type, created_at, updated_at, archived
         FROM robots
         ${where.length ? "WHERE " + where.join(" AND ") : ""}
-        ORDER BY updated_at DESC;
+        ORDER BY ${orderBy};
     `;
     const rows = await db.getAllAsync<any>(sql, params);
     return rows.map(mapRow);

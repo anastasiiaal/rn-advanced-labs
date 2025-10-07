@@ -153,6 +153,19 @@ Les tests suivants ont été effectués pour valider le fonctionnement du CRUD :
 
 ## TP 4 (b) - Robots avec Redux
 
+### Dépendances et rôles
+
+| Dépendance | Rôle | Remarques |
+|-------------|------|-----------|
+| **@reduxjs/toolkit** | Cœur de Redux moderne : création du store, des *slices* et des reducers avec une syntaxe simplifiée. | Permet d’éviter le boilerplate classique de Redux. |
+| **react-redux** | Fournit le `<Provider>` et les hooks `useSelector` / `useDispatch`. | C’est le lien entre React et Redux. |
+| **redux-persist** | Persiste le store Redux dans le stockage local. | Utilisé ici avec **AsyncStorage** pour garder les robots entre les sessions. |
+| **@react-native-async-storage/async-storage** | Stockage local clé-valeur pour React Native. | Nécessaire à `redux-persist` pour la persistance sur mobile. |
+| **yup** | Validation de schéma (structure et contraintes de données). | Empêche la création de robots invalides. |
+| **formik** | Gestionnaire de formulaires pour React. | Simplifie la création/édition d’un robot. |
+| **expo-router** | Système de navigation basé sur la structure des dossiers (`/app`). | Facilite la navigation entre la liste et le formulaire. |
+
+
 ### Arborescence
 ```
 app/
@@ -185,4 +198,20 @@ validation/
    └─ robotSchema.ts
 
 ```
+### Règles de validation
+| Champ | Type | Contraintes | Message(s) d’erreur |
+|-------|------|--------------|----------------------|
+| **id** | `uuid` | Généré automatiquement à la création | - |
+| **name** | `string` | Requis, min 2 caractères, unique (non sensible à la casse) | - Le nom est obligatoire<br>- Le nom doit contenir au moins 2 caractères<br>- Un robot avec ce nom existe déjà |
+| **label** | `string` | Requis, min 3 caractères | - Le label est obligatoire<br>- Le label doit contenir au moins 3 caractères |
+| **year** | `number` | Entier, min 1950, max année courante | - L’année doit être un nombre entier<br>- Année minimale : 1950<br>- Année maximale : {année courante} |
+| **type** | `enum` | Doit appartenir à : `industrial`, `service`, `medical`, `educational`, `other` | - Type invalide<br>- Le type est obligatoire |
+
+### Validation double
+
+1. **Côté formulaire (Formik + Yup)**  
+   → feedback immédiat à l’utilisateur avant toute action Redux.  
+2. **Côté slice Redux**  
+   → validation finale avant mutation du store (aucune donnée invalide n’entre dans l’état global).
+
 

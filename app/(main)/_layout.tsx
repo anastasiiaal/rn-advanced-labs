@@ -94,6 +94,14 @@ export default function MainLayout() {
           },
         }}
       />
+      {/* Robots with DB */}
+      <Tabs.Screen
+        name="tp5-robots-db"
+        options={{
+          title: "Robots (DB)",
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="tray.full.fill" color={color} />,
+        }}
+      />
     </Tabs>
   );
 }

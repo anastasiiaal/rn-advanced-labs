@@ -23,6 +23,8 @@ const MAPPING = {
   'plus': 'add',
   'robotic.vacuum.fill': 'cleaning-services',
   'cloud-sync.fill': 'cloud-sync',
+  'tray.fill': 'tray',
+  'tray.full.fill': 'inbox',
 } as IconMapping;
 
 /**

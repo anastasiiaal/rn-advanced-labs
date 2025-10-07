@@ -1,3 +1,10 @@
+# RN Advanced Labs
+
+- **Launch the project** : `npx expo start`
+- **Launch & clear the cache** : `npx expo start -c`
+- **Restart working project** : `r`
+
+---
 ## TP 1
 
 <img src="./assets/images/readme/1.jpg" width="25%" />

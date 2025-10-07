@@ -83,7 +83,7 @@ export default function MainLayout() {
       />
       {/* Robots Redux Toolkit */}
       <Tabs.Screen
-        name="tp4-robots-rtk/index"
+        name="tp4-robots-rtk"
         options={{
           title: "Robots",
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="cloud-sync.fill" color={color} />,

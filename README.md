@@ -148,3 +148,41 @@ Les tests suivants ont été effectués pour valider le fonctionnement du CRUD :
   <img src="./assets/images/readme/4.4.jpg" width="25%" />
   <img src="./assets/images/readme/4.5.jpg" width="25%" />
 </p>
+
+---
+
+## TP 4 (b) - Robots avec Redux
+
+### Arborescence
+```
+app/
+└─ (main)/
+   └─ tp4-robots-rtk/
+      ├─ _layout.tsx
+      ├─ index.tsx(FlatList + edit + delete + FAB)
+      ├─ create.tsx
+      └─ edit/
+         └─ [id].tsx
+
+tp4-store-rtk/
+├─ store.ts
+├─ rootReducer.ts
+└─ hooks.ts
+
+features/
+└─ robots/
+   └─ tp4-robots-rtk/
+      ├─ robotsSlice.ts
+      └─ selectors.ts
+
+components/
+└─ tp4-robots-rtk/
+   ├─ RobotForm.tsx
+   └─ RobotListItem.tsx
+
+validation/
+└─ tp4-robots-rtk/
+   └─ robotSchema.ts
+
+```
+
